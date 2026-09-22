@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>About — Carl Swanberg</title>
+    <title>Carl Swanberg — Contact</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -16,9 +16,9 @@
 
         :root {
             --bg: #0a0a0a;
-            --border: #1f1f1f;
-            --text: #f5f5f5;
+            --text: #ffffff;
             --text-muted: #888888;
+            --border: rgba(255, 255, 255, 0.08);
             --transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
@@ -81,6 +81,7 @@
         }
 
         .nav-links a {
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
             font-size: 0.85rem;
             font-weight: 400;
             color: var(--text-muted);
@@ -92,64 +93,115 @@
             color: var(--text);
         }
 
-        /* ─── About Photo ─── */
-        .about-photo {
-            width: 50%;
-            margin: 5rem auto 0;
-            background: var(--bg);
-        }
-
-        .about-photo img {
-            width: 100%;
-            height: auto;
-            display: block;
-            filter: grayscale(100%) contrast(1.25) brightness(0.92);
-        }
-
-        /* ─── About Text ─── */
-        .about-text {
-            max-width: 680px;
+        /* ─── Contact Content ─── */
+        .contact-section {
+            max-width: 700px;
             margin: 0 auto;
-            padding: 4rem 2rem 6rem;
+            padding: 8rem 2rem 6rem;
         }
 
-        .about-text p {
+        .back-link {
             font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-            font-size: 1rem;
+            font-size: 0.85rem;
             font-weight: 400;
-            color: #cccccc;
-            line-height: 1.8;
-            margin-bottom: 1.5rem;
+            color: #888;
+            text-decoration: none;
+            display: inline-block;
+            margin-bottom: 3rem;
+            transition: color 0.3s ease;
         }
 
-        .about-text p:last-child {
-            margin-bottom: 0;
+        .back-link:hover {
+            color: #ccc;
+        }
+
+        .agency-logo {
+            margin-bottom: 4rem;
+            text-align: center;
+        }
+
+        .agency-logo img {
+            height: 40px;
+            width: auto;
+            filter: brightness(0) invert(1);
+        }
+
+        .rep-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 3rem;
+        }
+
+        .rep-category {
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            font-size: 0.75rem;
+            font-weight: 600;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            margin-bottom: 1rem;
+        }
+
+        .rep-name {
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            font-size: 1.1rem;
+            font-weight: 400;
+            color: var(--text);
+            margin-bottom: 0.5rem;
+        }
+
+        .rep-email {
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            font-size: 0.85rem;
+            font-weight: 400;
+            color: var(--text-muted);
+            text-decoration: none;
+            display: block;
+            margin-bottom: 0.25rem;
+            transition: color 0.3s ease;
+        }
+
+        .rep-email:hover {
+            color: var(--text);
+        }
+
+        .rep-phone {
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            font-size: 0.85rem;
+            font-weight: 400;
+            color: var(--text-muted);
+            text-decoration: none;
+            display: block;
+            transition: color 0.3s ease;
+        }
+
+        .rep-phone:hover {
+            color: var(--text);
         }
 
         /* ─── Footer ─── */
         footer {
-            padding: 2rem 3rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
+            text-align: center;
+            padding: 3rem 2rem;
             border-top: 1px solid var(--border);
-            max-width: 1400px;
-            margin: 0 auto;
         }
 
         footer p {
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
             font-size: 0.8rem;
             color: var(--text-muted);
+            margin-bottom: 1rem;
         }
 
         .footer-links {
             display: flex;
-            gap: 1rem;
+            justify-content: center;
+            gap: 1.5rem;
         }
 
         .footer-links a {
             color: var(--text-muted);
-            transition: color var(--transition);
+            transition: color 0.3s ease;
         }
 
         .footer-links a:hover {
@@ -159,20 +211,20 @@
         /* ─── Responsive ─── */
         @media (max-width: 768px) {
             nav {
-                padding: 1.25rem 1.5rem;
+                padding: 1rem 1.5rem;
             }
-            .nav-links {
+
+            .nav-title {
                 display: none;
             }
-            .about-photo {
-                height: 50vh;
-                min-height: 300px;
+
+            .rep-grid {
+                grid-template-columns: 1fr;
+                gap: 2.5rem;
             }
-            .about-text {
-                padding: 3rem 1.5rem 4rem;
-            }
-            .about-text p {
-                font-size: 0.95rem;
+
+            .contact-section {
+                padding: 7rem 1.5rem 4rem;
             }
         }
     </style>
@@ -191,29 +243,39 @@
         </div>
     </nav>
 
-    <a href="index.html" style="font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 0.85rem; font-weight: 400; color: #888; text-decoration: none; display: inline-block; margin: 2rem 0 0 3rem; transition: color 0.3s ease;">&larr; Back</a>
+    <!-- Contact -->
+    <section class="contact-section">
+        <a href="index.html" class="back-link">&larr; Back</a>
 
-    <!-- Photo -->
-    <div class="about-photo">
-        <img src="about-portrait.png" alt="Carl Swanberg in New Orleans location scouting">
-    </div>
+        <div class="agency-logo">
+            <img src="wpa-logo-heading.svg" alt="WPA">
+        </div>
 
-    <!-- Text -->
-    <div class="about-text">
-        <p>Hello, Carl here. I was born and spent my younger days in Tokyo, Japan. Watching Japanese television as a child was formative for me as I fell in love with those amazing Japanese commercials, especially the ones with jingles.</p>
-        <p>Prior to working in film, I was a Product Designer for several watch companies, specifically Swatch, Fossil, and practically every permutation of the Hattori Seiko group. Working in product design is very similar to working as a Production Designer; I approach jobs as a designer. Design is problem solving, and in film every part must serve the whole while standing on its own.</p>
-        <p>I've also worked a myriad of other jobs in my youth and young adult life: mechanic, motorcycle exhaust factory worker, audio equipment assembly, recording studio maintenance, restaurant worker, engine builder, and coroner employee. All of it has been part of my education. It taught me to solve problems with whatever's in front of me, no matter how unfamiliar.</p>
-        <p>I've lived in Japan, the UK, and New Zealand, and traveled for work to cities across the US and around the world. That makes me very adaptable to my surroundings, especially when it comes to availability of scenery and crew.</p>
-        <p>Upfront communication is essential. Budget and Creative issues need to be addressed as soon as possible. Art Department needs to be in sync with Production, not standalone, and I work closely with Producers and Production Managers, Location Scouts, DPs, Costumers, and really anybody I can, to make the process easy on my department as well as everyone else's.</p>
-        <p>The creative matters just as much. I study Director's treatment and work with Directors closely to make sure their visual needs are met. I look to the agency boards to find where shared interests lie, and in long form, I read the script and study the characters closely.</p>
-        <p>I also consider myself a very competent bidder. I work with many companies to give Art Department bids when they're trying to land a job for their Directors. It keeps my pencil sharp and helps me grasp the scope of a project in relation to cost versus creativity, which is ultimately what makes a production designer valuable on a job.</p>
-        <p>You're only as good as the people you work with. Being fortunate to work alongside people who can accomplish amazing things taught me ego should never interfere with the work that goes in front of the camera.</p>
-        <p>Looking forward to creating amazing things together.</p>
-    </div>
+        <div class="rep-grid">
+            <div class="rep">
+                <p class="rep-category">Commercials</p>
+                <p class="rep-name">Steve Jacob</p>
+                <a href="mailto:sjacob@wp-a.com" class="rep-email">sjacob@wp-a.com</a>
+                <a href="tel:3238643614" class="rep-phone">323.864.3614</a>
+            </div>
+            <div class="rep">
+                <p class="rep-category">Narrative</p>
+                <p class="rep-name">Miranda Roseman</p>
+                <a href="mailto:peters.mirandaj@gmail.com" class="rep-email">peters.mirandaj@gmail.com</a>
+                <a href="tel:3143307482" class="rep-phone">(314) 330-7482</a>
+            </div>
+            <div class="rep">
+                <p class="rep-category">Television</p>
+                <p class="rep-name">Brian Goldberg</p>
+                <a href="mailto:brian@wp-a.com" class="rep-email">brian@wp-a.com</a>
+                <a href="tel:9089309474" class="rep-phone">908.930.9474</a>
+            </div>
+        </div>
+    </section>
 
     <!-- Footer -->
     <footer>
-        <p>© 2026 Carl Swanberg. All rights reserved.</p>
+        <p>&copy; 2026 Carl Swanberg. All rights reserved.</p>
         <div class="footer-links">
             <a href="https://instagram.com/carl_swanberg" target="_blank" rel="noopener" aria-label="Instagram"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg></a>
             <a href="https://www.linkedin.com/in/carl-swanberg-6a377b3b8" target="_blank" rel="noopener" aria-label="LinkedIn"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg></a>
