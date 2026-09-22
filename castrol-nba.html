@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jim Beam — Carl Swanberg</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg: #0a0a0a;
+            --surface: #111111;
+            --border: #1f1f1f;
+            --text: #f5f5f5;
+            --text-muted: #888888;
+            --transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        html {
+            scroll-behavior: smooth;
+            font-size: 16px;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            overflow-x: hidden;
+        }
+
+        /* ─── Navigation ─── */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 100;
+            padding: 1.5rem 3rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            backdrop-filter: blur(20px);
+            background: rgba(10, 10, 10, 0.8);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .nav-name {
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            font-size: 1.1rem;
+            font-weight: 600;
+            letter-spacing: -0.02em;
+            color: var(--text);
+            text-decoration: none;
+        }
+
+        .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+        }
+
+        .nav-title {
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            font-size: 0.9rem;
+            font-weight: 400;
+            color: var(--text-muted);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 1.5rem;
+        }
+
+        .nav-links a {
+            font-size: 0.85rem;
+            font-weight: 400;
+            color: var(--text-muted);
+            text-decoration: none;
+            transition: color var(--transition);
+        }
+
+        .nav-links a:hover {
+            color: var(--text);
+        }
+
+        /* ─── Sections ─── */
+        section {
+            padding: 7rem 3rem 6rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            font-size: 18px;
+            font-weight: 400;
+            color: #cccccc;
+            margin-bottom: 2rem;
+        }
+
+        /* ─── Video Grid ─── */
+        .video-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+        }
+
+        .video-card {
+            display: block;
+            text-decoration: none;
+            color: var(--text);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .video-thumb {
+            position: relative;
+            overflow: hidden;
+            aspect-ratio: 16/9;
+            background: #000;
+        }
+
+        .video-thumb img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .video-card:hover .video-thumb img {
+            transform: scale(1.02);
+        }
+
+        .video-info {
+            padding: 0.75rem 0;
+            opacity: 0;
+            transform: translateY(10px);
+            transition: var(--transition);
+        }
+
+        .video-card:hover .video-info {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .video-title {
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            font-size: 1rem;
+            font-weight: 400;
+            letter-spacing: -0.01em;
+            color: #cccccc;
+        }
+
+        /* ─── Footer ─── */
+        footer {
+            padding: 2rem 3rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-top: 1px solid var(--border);
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        footer p {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .footer-links a {
+            color: var(--text-muted);
+            transition: color var(--transition);
+        }
+
+        .footer-links a:hover {
+            color: var(--text);
+        }
+
+        /* ─── Video Player Modal ─── */
+        .player-modal {
+            position: fixed;
+            inset: 0;
+            z-index: 1000;
+            background: rgba(0, 0, 0, 0.95);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+        }
+
+        .player-modal.open {
+            opacity: 1;
+            pointer-events: all;
+        }
+
+        .player-container {
+            width: 80vw;
+            max-width: 1200px;
+            aspect-ratio: 16/9;
+            position: relative;
+        }
+
+        .player-container iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        .player-close {
+            position: absolute;
+            top: -3rem;
+            right: 0;
+            background: none;
+            border: none;
+            color: var(--text);
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        /* ─── Responsive ─── */
+        @media (max-width: 768px) {
+            nav {
+                padding: 1.25rem 1.5rem;
+            }
+            .nav-links {
+                display: none;
+            }
+            section {
+                padding: 6rem 1.5rem 4rem;
+            }
+            .video-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* ─── Lightbox ─── */
+        .lightbox {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            z-index: 200;
+            background: rgba(0, 0, 0, 0.95);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+            cursor: pointer;
+        }
+        .lightbox.open {
+            opacity: 1;
+            pointer-events: all;
+        }
+        .lightbox img {
+            max-width: 90vw;
+            max-height: 90vh;
+            object-fit: contain;
+            border: none;
+            box-shadow: 0 25px 80px rgba(0,0,0,0.6);
+        }
+        .lightbox-close {
+            position: absolute;
+            top: 1.5rem;
+            right: 2rem;
+            font-size: 2.5rem;
+            color: #fff;
+            cursor: pointer;
+            background: none;
+            border: none;
+            line-height: 1;
+            transition: opacity 0.2s;
+        }
+        .lightbox-close:hover {
+            opacity: 0.7;
+        }
+        .video-card {
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navigation -->
+    <nav>
+        <a href="index.html" class="nav-name">Carl Swanberg</a>
+        <div class="nav-right">
+            <span class="nav-title">Production Designer</span>
+            <div class="nav-links">
+                <a href="about.html">About</a>
+                <a href="index.html#contact">Contact</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Castrol NBA Case Study -->
+    <section>
+        <a href="index.html" style="font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 0.85rem; font-weight: 400; color: #888; text-decoration: none; display: inline-block; margin-bottom: 2rem; transition: color 0.3s ease;">&larr; Back</a>
+        <p style="font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 1rem; font-weight: 400; color: #cccccc; margin-top: 1rem; line-height: 1.7;">With Castrol we had a celebrity athlete who had about 4 hours of time on set. In these situations all set elements needed to be in one location. We shot this in the Milwaukee area so instead of a proper stage, we used a convention center that also had outdoor locations for a rally car shot.</p>
+        <p style="font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 1rem; font-weight: 400; color: #cccccc; margin-top: 1rem; line-height: 1.7;">Sourcing things such as the Car became a challenge as our closest source for a vehicle was in South Carolina. Once the car was sourced, we had a graphic overlay in Castrol branding just like their WRC cars printed and applied in nearby Chicago.</p>
+        <p style="font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 1rem; font-weight: 400; color: #cccccc; margin-top: 1rem; line-height: 1.7;">The F16 cockpit was a model that was sourced online, but we needed to add an extension for the additional seat. The extension was done in Rhino. The model was then exported to a useable file for a local CNC flatbed operator to cut out of plywood. Real F16 seats were sourced from a vendor in Las Vegas and shipped to our Milwaukee set shop to build out the cockpit.</p>
+        <p style="font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 1rem; font-weight: 400; color: #cccccc; margin-top: 1rem; line-height: 1.7;">The Nacelle and HUD for the F16 was a model again modified in Rhino to fit our purposes. 3D printing of those pieces were sourced out of the Chicagoland area. Printing was done via HP printers which makes much better prints than a standard Bambu Labs or Prusa printer as the pieces are formed in a powder that is sintered.</p>
+        <p style="font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 1rem; font-weight: 400; color: #cccccc; margin-top: 1rem; line-height: 1.7;">In addition to this, we built a frag set for the crows nest of the container ship working with the Post FX company who purchased a model of a cargo ship. I took the model, isolated the crows nest and did some modifications to make it more easy for a set shop to build with materials available locally. We rented some 20' containers as background so the VFX company didn't have to rotoscope the background which would have been difficult with our rain gag.</p>
+        <p style="font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 1rem; font-weight: 400; color: #cccccc; margin-top: 1rem; line-height: 1.7;">Finally our last set element was a 4 wall conference room. After inspecting the convention centers floor for the flattest and cleanest space to fit out set, we used the polished concrete floor as our actual floor as shot wise we never saw it, thus saving some funds in not having to subfloor and apply flooring to the set.</p>
+        <p style="font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 1rem; font-weight: 400; color: #cccccc; margin-top: 1rem; line-height: 1.7;">I would also like to say that I had an excellent crew in Milwaukee who did an amazing job in making this all come together. Sometimes when you work out of town it's a mixed bag of whom you get to work with. I was fortunate for the complete professionalism of this crew and set construction company.</p>
+        <div class="video-grid" style="margin-top: 3rem;">
+            <div class="video-card">
+                <div class="video-thumb">
+                    <img src="castrol_cockpit_cnc_cutout.jpg" alt="Cockpit cut out on CNC flatbed ready to assemble">
+                </div>
+                <div class="video-info">
+                    <h3 class="video-title">Cockpit cut out on CNC flatbed ready to assemble</h3>
+                </div>
+            </div>
+            <div class="video-card">
+                <div class="video-thumb">
+                    <img src="castrol_making_extensions_f16.jpg" alt="Making extensions to F16 cockpit">
+                </div>
+                <div class="video-info">
+                    <h3 class="video-title">Making extensions to F16 cockpit</h3>
+                </div>
+            </div>
+            <div class="video-card">
+                <div class="video-thumb">
+                    <img src="castrol_nacelle_test_fit.jpg" alt="Test fit of 3D printed nacelle in cockpit">
+                </div>
+                <div class="video-info">
+                    <h3 class="video-title">Test fit of 3D printed nacelle in cockpit</h3>
+                </div>
+            </div>
+            <div class="video-card">
+                <div class="video-thumb">
+                    <img src="castrol_finished_cockpit_stage.jpg" alt="Finished cockpit on stage">
+                </div>
+                <div class="video-info">
+                    <h3 class="video-title">Finished cockpit on stage</h3>
+                </div>
+            </div>
+            <div class="video-card">
+                <div class="video-thumb">
+                    <img src="castrol_cockpit_lighted.jpg" alt="Cockpit being lighted, ready to go">
+                </div>
+                <div class="video-info">
+                    <h3 class="video-title">Cockpit being lighted, ready to go</h3>
+                </div>
+            </div>
+            <div class="video-card">
+                <div class="video-thumb">
+                    <img src="castrol_cockpit_on_camera.jpg" alt="Cockpit on camera">
+                </div>
+                <div class="video-info">
+                    <h3 class="video-title">Cockpit on camera</h3>
+                </div>
+            </div>
+            <div class="video-card">
+                <div class="video-thumb">
+                    <img src="castrol_crows_nest_rhino.png" alt="Crows nest in Rhino">
+                </div>
+                <div class="video-info">
+                    <h3 class="video-title">Crows nest in Rhino</h3>
+                </div>
+            </div>
+            <div class="video-card">
+                <div class="video-thumb">
+                    <img src="castrol_crows_nest_construction.jpg" alt="Crows nest under construction">
+                </div>
+                <div class="video-info">
+                    <h3 class="video-title">Crows nest under construction</h3>
+                </div>
+            </div>
+            <div class="video-card">
+                <div class="video-thumb">
+                    <img src="castrol_scenic_work_crows_nest.jpg" alt="Scenic work on crows nest">
+                </div>
+                <div class="video-info">
+                    <h3 class="video-title">Scenic work on crows nest</h3>
+                </div>
+            </div>
+            <div class="video-card">
+                <div class="video-thumb">
+                    <img src="castrol_ladder_crows_nest.jpg" alt="Ladder for crows nest">
+                </div>
+                <div class="video-info">
+                    <h3 class="video-title">Ladder for crows nest</h3>
+                </div>
+            </div>
+            <a class="video-card" href="https://vimeo.com/1228867686">
+                <div class="video-thumb">
+                    <img src="castrol_crows_nest_on_camera.jpg" alt="Crows Nest on Camera">
+                </div>
+                <div class="video-info">
+                    <h3 class="video-title">Crows Nest on Camera</h3>
+                </div>
+            </a>
+            <a class="video-card" href="https://vimeo.com/1228867727">
+                <div class="video-thumb">
+                    <img src="castrol_rally_car_delivered.png" alt="Rally Car with applied graphics arriving on set">
+                </div>
+                <div class="video-info">
+                    <h3 class="video-title">Rally Car with applied graphics arriving on set</h3>
+                </div>
+            </a>
+            <div class="video-card">
+                <div class="video-thumb">
+                    <img src="castrol_4wall_office_set.jpg" alt="4 wall office set on set, finishing work to be done">
+                </div>
+                <div class="video-info">
+                    <h3 class="video-title">4 wall office set on set, finishing work to be done</h3>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <p>© 2026 Carl Swanberg. All rights reserved.</p>
+        <div class="footer-links">
+            <a href="https://instagram.com/carl_swanberg" target="_blank" rel="noopener" aria-label="Instagram"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg></a>
+            <a href="#" aria-label="LinkedIn"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg></a>
+        </div>
+    </footer>
+
+    <!-- Lightbox -->
+    <div class="lightbox" id="lightbox">
+        <button class="lightbox-close" onclick="closeLightbox()">&times;</button>
+        <img id="lightboxImg" src="" alt="">
+    </div>
+
+    <!-- Video Player Modal -->
+    <div class="player-modal" id="playerModal">
+        <div class="player-container">
+            <button class="player-close" onclick="closePlayer()">&times;</button>
+            <iframe id="playerFrame" src="" frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
+        </div>
+    </div>
+
+    <script>
+        // Video Player Modal
+        function openPlayer(videoId) {
+            const modal = document.getElementById('playerModal');
+            const frame = document.getElementById('playerFrame');
+            frame.src = `https://player.vimeo.com/video/${videoId}?autoplay=1&title=0&byline=0&portrait=0`;
+            modal.classList.add('open');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closePlayer() {
+            const modal = document.getElementById('playerModal');
+            const frame = document.getElementById('playerFrame');
+            frame.src = '';
+            modal.classList.remove('open');
+            document.body.style.overflow = '';
+        }
+
+        document.querySelectorAll('a.video-card').forEach(card => {
+            card.addEventListener('click', (e) => {
+                const href = card.getAttribute('href');
+                const match = href.match(/vimeo\.com\/(\d+)/);
+                if (match) {
+                    e.preventDefault();
+                    openPlayer(match[1]);
+                }
+            });
+        });
+
+        // Image Lightbox
+        function openLightbox(src) {
+            const lightbox = document.getElementById('lightbox');
+            const img = document.getElementById('lightboxImg');
+            img.src = src;
+            lightbox.classList.add('open');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeLightbox() {
+            const lightbox = document.getElementById('lightbox');
+            lightbox.classList.remove('open');
+            document.body.style.overflow = '';
+        }
+
+        document.querySelectorAll('div.video-card').forEach(card => {
+            card.addEventListener('click', () => {
+                const img = card.querySelector('img');
+                if (img) openLightbox(img.src);
+            });
+        });
+
+        document.getElementById('lightbox').addEventListener('click', (e) => {
+            if (e.target === e.currentTarget || e.target.classList.contains('lightbox-close')) closeLightbox();
+        });
+
+        document.getElementById('playerModal').addEventListener('click', (e) => {
+            if (e.target === e.currentTarget) closePlayer();
+        });
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                closeLightbox();
+                closePlayer();
+            }
+        });
+    </script>
+</body>
+</html>

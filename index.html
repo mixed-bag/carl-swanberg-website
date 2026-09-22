@@ -1,0 +1,1316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Carl Swanberg — Production Designer</title>
+    <meta name="description" content="Carl Swanberg is a production designer crafting immersive visual worlds for film, television, and stage.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg: #0a0a0a;
+            --surface: #111111;
+            --border: #1f1f1f;
+            --text: #f5f5f5;
+            --text-muted: #888888;
+            --accent: #e8e8e8;
+            --accent-warm: #c9a96e;
+            --radius: 12px;
+            --transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        html {
+            scroll-behavior: smooth;
+            font-size: 16px;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            overflow-x: hidden;
+        }
+
+        /* ─── Navigation ─── */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 100;
+            padding: 1.5rem 3rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            background: rgba(10, 10, 10, 0.8);
+            border-bottom: 1px solid var(--border);
+            transition: var(--transition);
+        }
+
+        .nav-logo {
+            font-size: 1.1rem;
+            font-weight: 600;
+            letter-spacing: -0.02em;
+            color: var(--text);
+            text-decoration: none;
+        }
+
+        .nav-logo span {
+            color: var(--accent-warm);
+        }
+
+        .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 2.5rem;
+        }
+
+        .nav-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            letter-spacing: -0.02em;
+            color: var(--text-muted);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2.5rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 0.85rem;
+            font-weight: 500;
+            letter-spacing: 0.02em;
+            transition: color var(--transition);
+        }
+
+        .nav-links a:hover {
+            color: var(--text);
+        }
+
+        /* ─── Hero ─── */
+        .hero {
+            min-height: 30vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: flex-start;
+            padding: 6rem 3rem 1rem;
+            max-width: 1400px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 20%;
+            right: 10%;
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, rgba(201, 169, 110, 0.08) 0%, transparent 70%);
+            border-radius: 50%;
+            pointer-events: none;
+        }
+
+        .hero-label {
+            font-size: 0.8rem;
+            font-weight: 500;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: var(--accent-warm);
+            margin-bottom: 2rem;
+            opacity: 0;
+            animation: fadeUp 0.8s ease forwards 0.2s;
+        }
+
+        .hero h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(3rem, 8vw, 6.5rem);
+            font-weight: 400;
+            line-height: 1.1;
+            letter-spacing: -0.03em;
+            margin-bottom: 2rem;
+            opacity: 0;
+            animation: fadeUp 0.8s ease forwards 0.4s;
+        }
+
+        .hero h1 em {
+            font-style: italic;
+            color: var(--accent-warm);
+        }
+
+        .hero-sub {
+            font-size: 1.15rem;
+            color: var(--text-muted);
+            max-width: 520px;
+            line-height: 1.7;
+            font-weight: 300;
+            opacity: 0;
+            animation: fadeUp 0.8s ease forwards 0.6s;
+        }
+
+        .hero-cta {
+            margin-top: 3rem;
+            opacity: 0;
+            animation: fadeUp 0.8s ease forwards 0.8s;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 1rem 2rem;
+            background: var(--text);
+            color: var(--bg);
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 600;
+            border-radius: 100px;
+            transition: var(--transition);
+            border: none;
+            cursor: pointer;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 40px rgba(255, 255, 255, 0.1);
+        }
+
+        .btn-outline {
+            background: transparent;
+            color: var(--text);
+            border: 1px solid var(--border);
+            margin-left: 1rem;
+        }
+
+        .btn-outline:hover {
+            border-color: var(--text-muted);
+            box-shadow: none;
+        }
+
+        /* ─── Sections ─── */
+        section {
+            padding: 2rem 3rem 6rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .section-label {
+            font-size: 0.75rem;
+            font-weight: 600;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: var(--accent-warm);
+            margin-bottom: 1.5rem;
+        }
+
+        .section-title {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(2rem, 4vw, 3rem);
+            font-weight: 400;
+            letter-spacing: -0.02em;
+            margin-bottom: 2rem;
+            line-height: 1.2;
+        }
+
+        /* ─── About ─── */
+        .about-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: start;
+        }
+
+        .about-text p {
+            color: var(--text-muted);
+            font-size: 1.05rem;
+            line-height: 1.8;
+            margin-bottom: 1.5rem;
+            font-weight: 300;
+        }
+
+        .about-stats {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+        }
+
+        .stat {
+            padding: 2rem;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            transition: var(--transition);
+        }
+
+        .stat:hover {
+            border-color: #2a2a2a;
+            transform: translateY(-2px);
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            letter-spacing: -0.03em;
+            margin-bottom: 0.5rem;
+            color: var(--accent-warm);
+        }
+
+        .stat-label {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            font-weight: 400;
+        }
+
+        /* ─── Work ─── */
+        .work-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .work-card {
+            position: relative;
+            aspect-ratio: 16/10;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            overflow: hidden;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: flex-end;
+            padding: 2rem;
+        }
+
+        .work-card::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, rgba(201, 169, 110, 0.03) 0%, transparent 50%);
+            transition: var(--transition);
+        }
+
+        .work-card:hover {
+            border-color: #2a2a2a;
+            transform: translateY(-4px);
+        }
+
+        .work-card:hover::before {
+            background: linear-gradient(135deg, rgba(201, 169, 110, 0.08) 0%, transparent 60%);
+        }
+
+        .work-card-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .work-card-category {
+            font-size: 0.75rem;
+            font-weight: 500;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--accent-warm);
+            margin-bottom: 0.5rem;
+        }
+
+        .work-card-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            letter-spacing: -0.01em;
+        }
+
+        .work-card-desc {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            margin-top: 0.5rem;
+            font-weight: 300;
+        }
+
+        /* ─── Video Grid ─── */
+        .video-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .video-card {
+            display: block;
+            text-decoration: none;
+            color: var(--text);
+            background: var(--surface);
+            border: none;
+            border-radius: 0;
+            overflow: hidden;
+            position: relative;
+            transition: var(--transition);
+        }
+
+        .video-card:hover {
+            border-color: #2a2a2a;
+            transform: translateY(-4px);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4);
+        }
+
+        .video-thumb {
+            position: relative;
+            aspect-ratio: 16/9;
+            overflow: hidden;
+            background: #1a1a1a;
+        }
+
+        .video-thumb img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .video-card:hover .video-thumb img {
+            transform: scale(1.02);
+        }
+
+
+
+        .video-placeholder {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            color: var(--text-muted);
+            font-weight: 300;
+        }
+
+        .video-card-empty {
+            opacity: 0.5;
+            pointer-events: none;
+        }
+
+        .video-info {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 1.25rem 1.5rem;
+            background: linear-gradient(transparent, rgba(0, 0, 0, 0.85));
+            opacity: 0;
+            transform: translateY(10px);
+            transition: var(--transition);
+        }
+
+        .video-card:hover .video-info {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .video-title {
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            font-size: 1rem;
+            font-weight: 400;
+            letter-spacing: -0.01em;
+            color: #cccccc;
+        }
+
+        .video-meta {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            font-weight: 400;
+        }
+
+        /* ─── Services ─── */
+        .services-list {
+            margin-top: 2rem;
+            display: flex;
+            flex-direction: column;
+            gap: 1px;
+            background: var(--border);
+            border-radius: 0;
+            overflow: hidden;
+        }
+
+        .service-item {
+            display: grid;
+            grid-template-columns: auto 1fr auto;
+            align-items: center;
+            gap: 2rem;
+            padding: 2.5rem 3rem;
+            background: var(--surface);
+            transition: var(--transition);
+        }
+
+        .service-item:hover {
+            background: #161616;
+        }
+
+        .service-number {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--accent-warm);
+            font-variant-numeric: tabular-nums;
+        }
+
+        .service-info h3 {
+            font-size: 1.15rem;
+            font-weight: 600;
+            margin-bottom: 0.3rem;
+            letter-spacing: -0.01em;
+        }
+
+        .service-info p {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            font-weight: 300;
+        }
+
+        .service-arrow {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            border: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--transition);
+        }
+
+        .service-item:hover .service-arrow {
+            border-color: var(--accent-warm);
+            background: rgba(201, 169, 110, 0.1);
+        }
+
+        .service-arrow svg {
+            width: 16px;
+            height: 16px;
+            stroke: var(--text-muted);
+            transition: var(--transition);
+        }
+
+        .service-item:hover .service-arrow svg {
+            stroke: var(--accent-warm);
+            transform: translateX(2px);
+        }
+
+        /* ─── Contact ─── */
+        .contact {
+            text-align: center;
+            padding-bottom: 10rem;
+        }
+
+        .contact .section-title {
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .contact-email {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.75rem;
+            font-size: 1.5rem;
+            font-weight: 500;
+            color: var(--text);
+            text-decoration: none;
+            margin-top: 2rem;
+            padding: 1.25rem 2.5rem;
+            border: 1px solid var(--border);
+            border-radius: 100px;
+            transition: var(--transition);
+            letter-spacing: -0.01em;
+        }
+
+        .contact-email:hover {
+            border-color: var(--accent-warm);
+            background: rgba(201, 169, 110, 0.05);
+            transform: translateY(-2px);
+        }
+
+        .contact-email svg {
+            width: 20px;
+            height: 20px;
+            stroke: var(--accent-warm);
+        }
+
+        /* ─── Footer ─── */
+        footer {
+            padding: 3rem;
+            border-top: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        footer p {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            font-weight: 300;
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .footer-links a {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            text-decoration: none;
+            transition: color var(--transition);
+        }
+
+        .footer-links a:hover {
+            color: var(--text);
+        }
+
+        /* ─── Animations ─── */
+        @keyframes fadeUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+
+        .reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* ─── Case Studies ─── */
+        .case-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1.5rem;
+            margin-top: 1rem;
+        }
+
+        .case-card {
+            background: var(--surface);
+            overflow: hidden;
+        }
+
+        .case-image {
+            aspect-ratio: 16/9;
+            background: #1a1a1a;
+        }
+
+        .case-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .case-text {
+            padding: 1.5rem;
+        }
+
+        .case-text h3 {
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            font-size: 1rem;
+            font-weight: 400;
+            margin-bottom: 0.5rem;
+            color: var(--text);
+        }
+
+        .case-text p {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            font-weight: 300;
+            line-height: 1.6;
+        }
+
+        /* ─── Player Modal ─── */
+        .player-modal {
+            display: none;
+            position: fixed;
+            inset: 0;
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .player-modal.open {
+            display: flex;
+        }
+
+        .player-modal-backdrop {
+            position: absolute;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.92);
+        }
+
+        .player-modal-content {
+            position: relative;
+            width: 90%;
+            max-width: 1100px;
+            z-index: 1;
+        }
+
+        .player-close {
+            position: absolute;
+            top: -50px;
+            right: 0;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            border: 1px solid var(--border);
+            background: var(--surface);
+            color: var(--text);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--transition);
+        }
+
+        .player-close:hover {
+            border-color: var(--text-muted);
+            background: #1a1a1a;
+        }
+
+        .player-close svg {
+            width: 20px;
+            height: 20px;
+        }
+
+        .player-container {
+            aspect-ratio: 16/9;
+            border-radius: 0;
+            overflow: hidden;
+            box-shadow: 0 25px 80px rgba(0, 0, 0, 0.6);
+        }
+
+        .player-container iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        /* ─── Responsive ─── */
+        @media (max-width: 768px) {
+            nav {
+                padding: 1.25rem 1.5rem;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .hero {
+                padding: 7rem 1.5rem 4rem;
+            }
+
+            section {
+                padding: 5rem 1.5rem;
+            }
+
+            .about-grid {
+                grid-template-columns: 1fr;
+                gap: 3rem;
+            }
+
+            .work-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .video-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .service-item {
+                grid-template-columns: auto 1fr;
+                padding: 2rem 1.5rem;
+            }
+
+            .service-arrow {
+                display: none;
+            }
+
+            footer {
+                flex-direction: column;
+                gap: 1rem;
+                padding: 2rem 1.5rem;
+            }
+
+            .contact-email {
+                font-size: 1.1rem;
+                padding: 1rem 2rem;
+            }
+        }
+
+        /* ─── Selection ─── */
+        ::selection {
+            background: rgba(201, 169, 110, 0.3);
+            color: var(--text);
+        }
+
+        /* ─── Slideshow Background ─── */
+        .slideshow-bg {
+            position: fixed;
+            inset: 0;
+            z-index: -1;
+            overflow: hidden;
+        }
+
+        .slideshow-slide {
+            position: absolute;
+            inset: 0;
+            background-size: cover;
+            background-position: center;
+            opacity: 0;
+            transition: opacity 3s ease;
+        }
+
+        .slideshow-slide.active {
+            opacity: 1;
+        }
+
+        .slideshow-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to bottom, rgba(10, 10, 10, 0.4) 0%, rgba(10, 10, 10, 0.85) 100%);
+        }
+
+        /* ─── Scrollbar ─── */
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--bg);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--border);
+            border-radius: 3px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #333;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Background Slideshow -->
+    <div class="slideshow-bg">
+        <div class="slideshow-slide active" data-index="0"></div>
+        <div class="slideshow-slide" data-index="1"></div>
+        <div class="slideshow-overlay"></div>
+    </div>
+
+    <!-- Navigation -->
+    <nav>
+        <a href="#" class="nav-logo">Carl Swanberg</a>
+        <div class="nav-right">
+            <span class="nav-title">Production Designer</span>
+            <ul class="nav-links">
+                <li><a href="about.html">About</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
+
+
+
+
+    <!-- Work -->
+    <section id="work" style="padding-top: 7rem;">
+        <div style="font-family: Helvetica, Arial, sans-serif; font-size: 18px; font-weight: 400; color: #999999; margin-bottom: 0; padding: 0; position: relative; z-index: 1;">Selected work</div>
+        <div class="video-grid">
+            <a href="https://vimeo.com/1225681552" target="_blank" class="video-card reveal">
+                <div class="video-thumb">
+                    <img src="thumbnail_nissan_kacper_larski_RSA_USA.jpg" alt="NISSAN Sentra Car Wash - Kacper Larski">
+                    <div class="video-play">
+                        <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="5,3 19,12 5,21"/></svg>
+                    </div>
+                </div>
+                <div class="video-info">
+                    <h3 class="video-title">Nissan "Sentra" - Kacper Larski - RSA USA</h3>
+                </div>
+            </a>
+            <a href="https://vimeo.com/1225683922" target="_blank" class="video-card reveal">
+                <div class="video-thumb">
+                    <img src="thumbnail_youtube_yearlyrecap_MAMA.png" alt="YouTube Yearly Recap - MAMA - Caviar Films">
+                    <div class="video-play">
+                        <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="5,3 19,12 5,21"/></svg>
+                    </div>
+                </div>
+                <div class="video-info">
+                    <h3 class="video-title">YouTube "Yearly Recap" - MAMA - Caviar Films</h3>
+                </div>
+            </a>
+            <a href="https://vimeo.com/1225717995" target="_blank" class="video-card reveal">
+                <div class="video-thumb">
+                    <img src="thumbnail_castrol_NBA_.png" alt="CASTROL NBA" style="transform: scale(1.1);">
+                    <div class="video-play">
+                        <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="5,3 19,12 5,21"/></svg>
+                    </div>
+                </div>
+                <div class="video-info">
+                    <h3 class="video-title">Castrol "NBA" - Femi Ladi - Eleanor Films</h3>
+                </div>
+            </a>
+            <a href="https://vimeo.com/867732211" target="_blank" class="video-card reveal">
+                <div class="video-thumb">
+                    <img src="thumbnail_slurpee_cherryred_Adrien_DeSagarces.png" alt="Slurpee Cherry Red - Adrian De Sa Garces - Eleanor Films">
+                    <div class="video-play">
+                        <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="5,3 19,12 5,21"/></svg>
+                    </div>
+                </div>
+                <div class="video-info">
+                    <h3 class="video-title">Slurpee "Cherry Red" - Adrian De Sa Garces - Eleanor Films</h3>
+                </div>
+            </a>
+            <a href="https://vimeo.com/1225683332" target="_blank" class="video-card reveal">
+                <div class="video-thumb">
+                    <img src="thumbnail_us_army_helper.png" alt="US Army Helper - Kacper Larski - Eleanor">
+                    <div class="video-play">
+                        <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="5,3 19,12 5,21"/></svg>
+                    </div>
+                </div>
+                <div class="video-info">
+                    <h3 class="video-title">US Army "Helper" - Kacper Larski - Eleanor</h3>
+                </div>
+            </a>
+            <a href="https://vimeo.com/871109892" target="_blank" class="video-card reveal">
+                <div class="video-thumb">
+                    <img src="thumbnail_daves_hot_chicken.png" alt="Dave's Hot Chicken - MAMA - WW7">
+                    <div class="video-play">
+                        <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="5,3 19,12 5,21"/></svg>
+                    </div>
+                </div>
+                <div class="video-info">
+                    <h3 class="video-title">Dave's "Hot Chicken" - MAMA - WW7</h3>
+                </div>
+            </a>
+            <a href="https://vimeo.com/871113631" target="_blank" class="video-card reveal">
+                <div class="video-thumb">
+                    <img src="thumbnail_scotts_surrounded_MAMA.png" alt="Scott's Surrounded - MAMA - WW7" style="transform: scale(1.1);">
+                    <div class="video-play">
+                        <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="5,3 19,12 5,21"/></svg>
+                    </div>
+                </div>
+                <div class="video-info">
+                    <h3 class="video-title">Scott's "Surrounded" - MAMA - WW7</h3>
+                </div>
+            </a>
+            <a href="https://vimeo.com/259228191" target="_blank" class="video-card reveal">
+                <div class="video-thumb">
+                    <img src="thumbnail_brisk_hidden_hustle_paul_hunter.png" alt="Brisk Hidden Hustle - Paul Hunter - Prettybird" style="transform: scale(1.05);">
+                    <div class="video-play">
+                        <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="5,3 19,12 5,21"/></svg>
+                    </div>
+                </div>
+                <div class="video-info">
+                    <h3 class="video-title">Brisk "Hidden Hustle" - Paul Hunter - Prettybird</h3>
+                </div>
+            </a>
+            <a href="https://vimeo.com/879163221" target="_blank" class="video-card reveal">
+                <div class="video-thumb">
+                    <img src="thumbnail_mazda_prologue_JJ_Augustavo.png" alt="Mazda Prologue - JJ Augustavo - Missing Pieces">
+                    <div class="video-play">
+                        <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="5,3 19,12 5,21"/></svg>
+                    </div>
+                </div>
+                <div class="video-info">
+                    <h3 class="video-title">Mazda "Prologue" - JJ Augustavo - M ss ng P eces</h3>
+                </div>
+            </a>
+            <a href="https://vimeo.com/203050068" target="_blank" class="video-card reveal">
+                <div class="video-thumb">
+                    <img src="thumbnail_bai_gentlemen_Hamish_Rothwell.png" alt="Bai Jentlemen - Hamish Rothwell - Superprime">
+                    <div class="video-play">
+                        <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="5,3 19,12 5,21"/></svg>
+                    </div>
+                </div>
+                <div class="video-info">
+                    <h3 class="video-title">Bai "Jentlemen" - Hamish Rothwell - Superprime</h3>
+                </div>
+            </a>
+            <a href="https://vimeo.com/713759157" target="_blank" class="video-card reveal">
+                <div class="video-thumb">
+                    <img src="thumbnail_samsung_lights_The_Malloys.png" alt="Samsung Lights - The Malloys - Superprime" style="transform: scale(1.04);">
+                    <div class="video-play">
+                        <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="5,3 19,12 5,21"/></svg>
+                    </div>
+                </div>
+                <div class="video-info">
+                    <h3 class="video-title">Samsung "Lights" - The Malloys - Superprime</h3>
+                </div>
+            </a>
+            <a href="https://vimeo.com/713771323" target="_blank" class="video-card reveal">
+                <div class="video-thumb">
+                    <img src="thumbnail_reeses_X_cadbury_choice_MAMA.png" alt="Reese's X Cadbury Choice - MAMA WW7">
+                    <div class="video-play">
+                        <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="5,3 19,12 5,21"/></svg>
+                    </div>
+                </div>
+                <div class="video-info">
+                    <h3 class="video-title">Reese's X Cadbury "Choice" - MAMA WW7</h3>
+                </div>
+            </a>
+            <a href="https://vimeo.com/420120449" target="_blank" class="video-card reveal">
+                <div class="video-thumb">
+                    <img src="thumbnail_fiat_500_all_in_Josheph_Kahn.png" alt="Fiat 500e All In - Joseph Kahn - Supply & Demand" style="transform: scale(1.04);">
+                    <div class="video-play">
+                        <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="5,3 19,12 5,21"/></svg>
+                    </div>
+                </div>
+                <div class="video-info">
+                    <h3 class="video-title">Fiat 500e "All In" - Joseph Kahn - Supply & Demand</h3>
+                </div>
+            </a>
+            <a href="https://vimeo.com/719147671" target="_blank" class="video-card reveal">
+                <div class="video-thumb">
+                    <img src="thumbnail_midea_chief_idea_officer_MAMA.png" alt="Midea Launch - MAMA - WW7" style="transform: scale(1.04);">
+                    <div class="video-play">
+                        <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="5,3 19,12 5,21"/></svg>
+                    </div>
+                </div>
+                <div class="video-info">
+                    <h3 class="video-title">Midea "Launch" - MAMA - WW7</h3>
+                </div>
+            </a>
+            <a href="https://vimeo.com/929610087" target="_blank" class="video-card reveal">
+                <div class="video-thumb">
+                    <img src="thumbnail_home_depot.jpg" alt="Home Depot Keep it Moving - Adrian De Sa Garces - Eleanor">
+                    <div class="video-play">
+                        <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="5,3 19,12 5,21"/></svg>
+                    </div>
+                </div>
+                <div class="video-info">
+                    <h3 class="video-title">Home Depot "Keep it Moving" - Adrien De Sa Garces - Eleanor Films</h3>
+                </div>
+            </a>
+            <a href="https://vimeo.com/1227038415" target="_blank" class="video-card reveal">
+                <div class="video-thumb">
+                    <img src="jim_beam_thumbnail.png" alt="Jim Beam - Mama - Caviar">
+                    <div class="video-play">
+                        <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="5,3 19,12 5,21"/></svg>
+                    </div>
+                </div>
+                <div class="video-info">
+                    <h3 class="video-title">Jim Beam - Mama - Caviar</h3>
+                </div>
+            </a>
+            <a href="https://vimeo.com/439870324" target="_blank" class="video-card reveal">
+                <div class="video-thumb">
+                    <img src="thumbnail_usaa_steve_judy.jpg" alt="USAA Steve and Judy - The Malloys - Superprime">
+                    <div class="video-play">
+                        <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="5,3 19,12 5,21"/></svg>
+                    </div>
+                </div>
+                <div class="video-info">
+                    <h3 class="video-title">USAA "Steve and Judy" - The Malloys - Superprime</h3>
+                </div>
+            </a>
+            <a href="https://vimeo.com/713759647" target="_blank" class="video-card reveal">
+                <div class="video-thumb">
+                    <img src="thumbnail_new_york_festivals.jpg" alt="New York Festivals Hell's Kitchen - Sheena Brady - JHF Productions">
+                    <div class="video-play">
+                        <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="5,3 19,12 5,21"/></svg>
+                    </div>
+                </div>
+                <div class="video-info">
+                    <h3 class="video-title">New York Festivals "Hell's Kitchen" - Sheena Brady - JHF Productions</h3>
+                </div>
+            </a>
+            <a href="https://vimeo.com/1228928675" target="_blank" class="video-card reveal">
+                <div class="video-thumb">
+                    <img src="thumbnail_pelame_la_papa.png" alt="Pélame La Papa - MAMA">
+                    <div class="video-play">
+                        <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="5,3 19,12 5,21"/></svg>
+                    </div>
+                </div>
+                <div class="video-info">
+                    <h3 class="video-title">Jarina De Marco + Mediapicky - Pélame La Papa - MAMA</h3>
+                </div>
+            </a>
+            <a href="https://vimeo.com/431968550" target="_blank" class="video-card reveal">
+                <div class="video-thumb">
+                    <img src="thumbnail_nissan_bad_weather.png" alt="Nissan There's no such thing as bad weather - Gerald McMorrow - Eleanor">
+                    <div class="video-play">
+                        <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="5,3 19,12 5,21"/></svg>
+                    </div>
+                </div>
+                <div class="video-info">
+                    <h3 class="video-title">Nissan "There's No Such Thing as Bad Weather" - Gerald McMorrow - Eleanor</h3>
+                </div>
+            </a>
+            <a href="https://vimeo.com/170066562" target="_blank" class="video-card reveal">
+                <div class="video-thumb">
+                    <img src="thumbnail_mercedes_timeless.png" alt="Mercedes Timeless - Jeffery Plansker - Supply & Demand">
+                    <div class="video-play">
+                        <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="5,3 19,12 5,21"/></svg>
+                    </div>
+                </div>
+                <div class="video-info">
+                    <h3 class="video-title">Mercedes "Timeless" - Jeffery Plansker - Supply &amp; Demand</h3>
+                </div>
+            </a>
+        </div>
+    </section>
+
+    <!-- Case Studies -->
+    <section id="case-studies" style="padding-top: 2rem;">
+        <div class="reveal">
+            <h2 style="font-family: Helvetica, Arial, sans-serif; font-size: 18px; font-weight: 400; letter-spacing: -0.02em; color: #999999;">Case Studies</h2>
+        </div>
+        <div class="services-list reveal">
+            <a href="jim-beam.html" style="text-decoration: none; color: inherit;">
+            <div class="service-item">
+                <span class="service-number">01</span>
+                <div class="service-info">
+                    <h3>Jim Beam</h3>
+                    <p></p>
+                </div>
+            </div>
+            </a>
+            <a href="castrol-nba.html" style="text-decoration: none; color: inherit;">
+            <div class="service-item">
+                <span class="service-number">02</span>
+                <div class="service-info">
+                    <h3>Castrol NBA</h3>
+                    <p></p>
+                </div>
+            </div>
+            </a>
+            <a href="usaa.html" style="text-decoration: none; color: inherit;">
+            <div class="service-item">
+                <span class="service-number">03</span>
+                <div class="service-info">
+                    <h3>USAA</h3>
+                    <p></p>
+                </div>
+            </div>
+            </a>
+            <a href="pelame-la-papa.html" style="text-decoration: none; color: inherit;">
+            <div class="service-item">
+                <span class="service-number">04</span>
+                <div class="service-info">
+                    <h3>Pélame La Papa</h3>
+                    <p></p>
+                </div>
+            </div>
+            </a>
+        </div>
+    </section>
+
+    <!-- Long Form -->
+    <section id="long-form" style="padding-top: 1rem;">
+        <div style="font-family: Helvetica, Arial, sans-serif; font-size: 18px; font-weight: 400; color: #999999; margin-bottom: 0; padding: 0; position: relative; z-index: 1;">Long Form</div>
+        <div class="video-grid">
+            <a href="https://vimeo.com/431098285" target="_blank" class="video-card reveal">
+                <div class="video-thumb">
+                    <img src="thumbnail_bow_tie.jpg" alt="Bow Tie - Film by Gabriela Cowperthwaite">
+                </div>
+                <div class="video-info">
+                    <h3 class="video-title">Bow Tie - Film by Gabriela Cowperthwaite</h3>
+                </div>
+            </a>
+            <a href="https://vimeo.com/874841128" target="_blank" class="video-card reveal">
+                <div class="video-thumb">
+                    <img src="thumbnail_blue_smoke.jpg" alt="Blue Smoke - Short Film - Ivan Barge" style="object-fit: contain; background: #000;">
+                </div>
+                <div class="video-info">
+                    <h3 class="video-title">Blue Smoke - Short Film - Ivan Barge</h3>
+                </div>
+            </a>
+            <a href="https://vimeo.com/420120143" target="_blank" class="video-card reveal">
+                <div class="video-thumb">
+                    <img src="thumbnail_eko_damage_control.jpg" alt="eko - Damage Control - Trailer">
+                </div>
+                <div class="video-info">
+                    <h3 class="video-title">eko - "Damage Control" - Trailer</h3>
+                </div>
+            </a>
+        </div>
+    </section>
+
+    <!-- Contact -->
+    <section id="contact" class="contact">
+        <div class="reveal">
+            <p class="section-label">Contact</p>
+            <a href="mailto:cdswan@gmail.com" class="contact-email">
+                <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                    <rect x="2" y="4" width="20" height="16" rx="2"/>
+                    <path d="M22 7l-10 6L2 7"/>
+                </svg>
+                cdswan@gmail.com
+            </a>
+        </div>
+    </section>
+
+    <!-- Video Player Modal -->
+    <div class="player-modal" id="playerModal">
+        <div class="player-modal-backdrop" onclick="closePlayer()"></div>
+        <div class="player-modal-content">
+            <button class="player-close" onclick="closePlayer()">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M18 6L6 18M6 6l12 12"/></svg>
+            </button>
+            <div class="player-container">
+                <iframe id="playerFrame" src="" frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <p>© 2026 Carl Swanberg. All rights reserved.</p>
+        <div class="footer-links">
+            <a href="https://instagram.com/carl_swanberg" target="_blank" rel="noopener" aria-label="Instagram"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg></a>
+            <a href="#" aria-label="LinkedIn"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg></a>
+        </div>
+    </footer>
+
+    <script>
+        // Background Slideshow
+        const images = [
+            '1.png','2.png','3.png','4.png','5.png','6.png','7.png','8.png','9.png','10.png',
+            '11.png','12.png','13.png','14.png','15.png','16.png','17.png','18.png','19.png','21.png',
+            '22.png','23.png','24.png','25.png','27.png','30.png','31.png','33.png','36.png','41.png',
+            '42.png','43.png','44.png','45.png','47.png','52.png','55.png','71.png','72.png','77.png',
+            '80.png','81.png','82.png','87.png','88.png','90.png','100.png','108.png','119.png','120.png',
+            '121.png','130.png'
+        ];
+
+        // Shuffle for random order
+        function shuffle(arr) {
+            const a = [...arr];
+            for (let i = a.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [a[i], a[j]] = [a[j], a[i]];
+            }
+            return a;
+        }
+
+        let order = shuffle(images);
+        let currentIdx = 0;
+        const slides = document.querySelectorAll('.slideshow-slide');
+        let activeSlide = 0;
+
+        function setSlide(slideEl, src) {
+            slideEl.style.backgroundImage = `url('${src}')`;
+        }
+
+        // Initialize both slides
+        setSlide(slides[0], order[0]);
+        setSlide(slides[1], order[1]);
+
+        function nextSlide() {
+            const nextSlideIdx = (activeSlide + 1) % 2;
+            const nextImageIdx = (currentIdx + 1) % order.length;
+
+            if (nextImageIdx === 0) {
+                order = shuffle(images);
+            }
+
+            setSlide(slides[nextSlideIdx], order[nextImageIdx]);
+
+            requestAnimationFrame(() => {
+                slides[activeSlide].classList.remove('active');
+                slides[nextSlideIdx].classList.add('active');
+            });
+
+            activeSlide = nextSlideIdx;
+            currentIdx = nextImageIdx;
+        }
+
+        setInterval(nextSlide, 10000);
+
+        // Video Player Modal
+        function openPlayer(videoId) {
+            const modal = document.getElementById('playerModal');
+            const frame = document.getElementById('playerFrame');
+            frame.src = `https://player.vimeo.com/video/${videoId}?autoplay=1&title=0&byline=0&portrait=0`;
+            modal.classList.add('open');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closePlayer() {
+            const modal = document.getElementById('playerModal');
+            const frame = document.getElementById('playerFrame');
+            frame.src = '';
+            modal.classList.remove('open');
+            document.body.style.overflow = '';
+        }
+
+        // Attach click handlers to video cards
+        document.querySelectorAll('.video-card:not(.video-card-empty)').forEach(card => {
+            card.addEventListener('click', (e) => {
+                e.preventDefault();
+                const href = card.getAttribute('href');
+                const match = href.match(/vimeo\.com\/(\d+)/);
+                if (match) openPlayer(match[1]);
+            });
+        });
+
+        // Close on Escape key
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') closePlayer();
+        });
+
+        // Scroll reveal
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        });
+
+        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+        // Smooth nav background on scroll
+        const nav = document.querySelector('nav');
+        let lastScroll = 0;
+
+        window.addEventListener('scroll', () => {
+            const currentScroll = window.scrollY;
+            if (currentScroll > 100) {
+                nav.style.background = 'rgba(10, 10, 10, 0.95)';
+            } else {
+                nav.style.background = 'rgba(10, 10, 10, 0.8)';
+            }
+            lastScroll = currentScroll;
+        }, { passive: true });
+    </script>
+
+</body>
+</html>

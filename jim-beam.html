@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jim Beam — Carl Swanberg</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg: #0a0a0a;
+            --surface: #111111;
+            --border: #1f1f1f;
+            --text: #f5f5f5;
+            --text-muted: #888888;
+            --transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        html {
+            scroll-behavior: smooth;
+            font-size: 16px;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            overflow-x: hidden;
+        }
+
+        /* ─── Navigation ─── */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 100;
+            padding: 1.5rem 3rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            backdrop-filter: blur(20px);
+            background: rgba(10, 10, 10, 0.8);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .nav-name {
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            font-size: 1.1rem;
+            font-weight: 600;
+            letter-spacing: -0.02em;
+            color: var(--text);
+            text-decoration: none;
+        }
+
+        .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+        }
+
+        .nav-title {
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            font-size: 0.9rem;
+            font-weight: 400;
+            color: var(--text-muted);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 1.5rem;
+        }
+
+        .nav-links a {
+            font-size: 0.85rem;
+            font-weight: 400;
+            color: var(--text-muted);
+            text-decoration: none;
+            transition: color var(--transition);
+        }
+
+        .nav-links a:hover {
+            color: var(--text);
+        }
+
+        /* ─── Sections ─── */
+        section {
+            padding: 7rem 3rem 6rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            font-size: 18px;
+            font-weight: 400;
+            color: #cccccc;
+            margin-bottom: 2rem;
+        }
+
+        /* ─── Video Grid ─── */
+        .video-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+        }
+
+        .video-card {
+            display: block;
+            text-decoration: none;
+            color: var(--text);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .video-thumb {
+            position: relative;
+            overflow: hidden;
+            aspect-ratio: 16/9;
+            background: #000;
+        }
+
+        .video-thumb img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .video-card:hover .video-thumb img {
+            transform: scale(1.02);
+        }
+
+        .video-info {
+            padding: 0.75rem 0;
+            opacity: 0;
+            transform: translateY(10px);
+            transition: var(--transition);
+        }
+
+        .video-card:hover .video-info {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .video-title {
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            font-size: 1rem;
+            font-weight: 400;
+            letter-spacing: -0.01em;
+            color: #cccccc;
+        }
+
+        /* ─── Footer ─── */
+        footer {
+            padding: 2rem 3rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-top: 1px solid var(--border);
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        footer p {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .footer-links a {
+            color: var(--text-muted);
+            transition: color var(--transition);
+        }
+
+        .footer-links a:hover {
+            color: var(--text);
+        }
+
+        /* ─── Video Player Modal ─── */
+        .player-modal {
+            position: fixed;
+            inset: 0;
+            z-index: 1000;
+            background: rgba(0, 0, 0, 0.95);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+        }
+
+        .player-modal.open {
+            opacity: 1;
+            pointer-events: all;
+        }
+
+        .player-container {
+            width: 80vw;
+            max-width: 1200px;
+            aspect-ratio: 16/9;
+            position: relative;
+        }
+
+        .player-container iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        .player-close {
+            position: absolute;
+            top: -3rem;
+            right: 0;
+            background: none;
+            border: none;
+            color: var(--text);
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        /* ─── Responsive ─── */
+        @media (max-width: 768px) {
+            nav {
+                padding: 1.25rem 1.5rem;
+            }
+            .nav-links {
+                display: none;
+            }
+            section {
+                padding: 6rem 1.5rem 4rem;
+            }
+            .video-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* ─── Lightbox ─── */
+        .lightbox {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            z-index: 200;
+            background: rgba(0, 0, 0, 0.95);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+            cursor: pointer;
+        }
+        .lightbox.open {
+            opacity: 1;
+            pointer-events: all;
+        }
+        .lightbox img {
+            max-width: 90vw;
+            max-height: 90vh;
+            object-fit: contain;
+            border: none;
+            box-shadow: 0 25px 80px rgba(0,0,0,0.6);
+        }
+        .lightbox-close {
+            position: absolute;
+            top: 1.5rem;
+            right: 2rem;
+            font-size: 2.5rem;
+            color: #fff;
+            cursor: pointer;
+            background: none;
+            border: none;
+            line-height: 1;
+            transition: opacity 0.2s;
+        }
+        .lightbox-close:hover {
+            opacity: 0.7;
+        }
+        .video-card {
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navigation -->
+    <nav>
+        <a href="index.html" class="nav-name">Carl Swanberg</a>
+        <div class="nav-right">
+            <span class="nav-title">Production Designer</span>
+            <div class="nav-links">
+                <a href="about.html">About</a>
+                <a href="index.html#contact">Contact</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Jim Beam Case Study -->
+    <section>
+        <a href="index.html" style="font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 0.85rem; font-weight: 400; color: #888; text-decoration: none; display: inline-block; margin-bottom: 2rem; transition: color 0.3s ease;">&larr; Back</a>
+        <h1 class="section-title">Jim Beam was a financially challenged job where we had to really make maximum use of our budget.</h1>
+        <p style="font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 1rem; font-weight: 400; color: #cccccc; margin-top: 1rem; line-height: 1.7;">Our task was to take a mower, make it generic and Jim Beam Branded, This was done with a wrap. In order to fit through doors the blade basket had to be cut in the middle and re-welded back together in order for our mower to ride through various passages like an elevator, closet door, and Bar entryway.</p>
+        <p style="font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 1rem; font-weight: 400; color: #cccccc; margin-top: 1rem; line-height: 1.7;">In addition to this, We had to create a frag wall set inside an existing set piece at a stage to make the transition from a bar into a living room.</p>
+        <p style="font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 1rem; font-weight: 400; color: #cccccc; margin-top: 1rem; line-height: 1.7;">The trailer started life as a standard Amazon sourced item, but we shortened the tongue to make the trailer closer to the tractor pulling it.</p>
+        <p style="font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 1rem; font-weight: 400; color: #cccccc; margin-top: 1rem; line-height: 1.7;">The crate mockup we made was far too high to my liking and since moving the axle line of the trailer was impractical, we channeled the box around the existing trailer platform to make it look lower.</p>
+        <p style="font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 1rem; font-weight: 400; color: #cccccc; margin-top: 1rem; line-height: 1.7;">Since the client provided only 13 bottles of product to use, we made a polystyrene peg board to hold each bottle firmly as the trailer moved. Cinema Ice was added to make it look like the bottles were deeply encased in our trailer/cooler.</p>
+        <div class="video-grid" style="margin-top: 3rem;">
+            <div class="video-card">
+                <div class="video-thumb">
+                    <img src="jimbeam_first_mockup.jpg" alt="First mockup too high">
+                </div>
+                <div class="video-info">
+                    <h3 class="video-title">First mockup too high</h3>
+                </div>
+            </div>
+            <div class="video-card">
+                <div class="video-thumb">
+                    <img src="jimbeam_final_configuration.jpg" alt="Final configuration, box channeled over existing pan">
+                </div>
+                <div class="video-info">
+                    <h3 class="video-title">Final configuration, box channeled over existing pan</h3>
+                </div>
+            </div>
+            <div class="video-card">
+                <div class="video-thumb">
+                    <img src="jimbeam_trailer_box_painted.jpg" alt="Trailer box painted">
+                </div>
+                <div class="video-info">
+                    <h3 class="video-title">Trailer box painted</h3>
+                </div>
+            </div>
+            <div class="video-card">
+                <div class="video-thumb">
+                    <img src="jimbeam_13_bottles_foam.jpg" alt="Using foam to make the 13 bottles fit in a cinematic layout">
+                </div>
+                <div class="video-info">
+                    <h3 class="video-title">Using foam to make the 13 bottles fit in a cinematic layout</h3>
+                </div>
+            </div>
+            <div class="video-card">
+                <div class="video-thumb">
+                    <img src="jimbeam_welding_blade_holder.jpg" alt="Welding the narrowed blade holder">
+                </div>
+                <div class="video-info">
+                    <h3 class="video-title">Welding the narrowed blade holder</h3>
+                </div>
+            </div>
+            <div class="video-card">
+                <div class="video-thumb">
+                    <img src="jimbeam_narrowed_blade_holder.jpg" alt="Narrowed blade holder ready for paint">
+                </div>
+                <div class="video-info">
+                    <h3 class="video-title">Narrowed blade holder ready for paint</h3>
+                </div>
+            </div>
+            <div class="video-card">
+                <div class="video-thumb">
+                    <img src="jimbeam_set_within_set.jpg" alt="Set within a set being built">
+                </div>
+                <div class="video-info">
+                    <h3 class="video-title">Set within a set being built</h3>
+                </div>
+            </div>
+            <a class="video-card" href="https://vimeo.com/1228877908">
+                <div class="video-thumb" style="display: flex; align-items: center; justify-content: center;">
+                    <video src="jimbeam_set_walls_in_place.mov" muted playsinline style="width: 100%; height: 100%; object-fit: cover;"></video>
+                </div>
+                <div class="video-info">
+                    <h3 class="video-title">Set walls in place testing out the move</h3>
+                </div>
+            </a>
+            <a class="video-card" href="https://vimeo.com/1229056389" onclick="openPlayer('1229056389'); return false;">
+                <div class="video-thumb">
+                    <img src="jimbeam_testing_setup.jpg" alt="Testing our setup from bar into living room">
+                </div>
+                <div class="video-info">
+                    <h3 class="video-title">Need more sandbags!</h3>
+                </div>
+            </a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <p>© 2026 Carl Swanberg. All rights reserved.</p>
+        <div class="footer-links">
+            <a href="https://instagram.com/carl_swanberg" target="_blank" rel="noopener" aria-label="Instagram"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg></a>
+            <a href="#" aria-label="LinkedIn"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg></a>
+        </div>
+    </footer>
+
+    <!-- Lightbox -->
+    <div class="lightbox" id="lightbox">
+        <button class="lightbox-close" onclick="closeLightbox()">&times;</button>
+        <img id="lightboxImg" src="" alt="">
+    </div>
+
+    <!-- Video Player Modal -->
+    <div class="player-modal" id="playerModal">
+        <div class="player-container">
+            <button class="player-close" onclick="closePlayer()">&times;</button>
+            <iframe id="playerFrame" src="" frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
+        </div>
+    </div>
+
+    <script>
+        // Video Player Modal
+        function openPlayer(videoId) {
+            const modal = document.getElementById('playerModal');
+            const frame = document.getElementById('playerFrame');
+            frame.src = `https://player.vimeo.com/video/${videoId}?autoplay=1&title=0&byline=0&portrait=0`;
+            modal.classList.add('open');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closePlayer() {
+            const modal = document.getElementById('playerModal');
+            const frame = document.getElementById('playerFrame');
+            frame.src = '';
+            modal.classList.remove('open');
+            document.body.style.overflow = '';
+        }
+
+        document.querySelectorAll('a.video-card').forEach(card => {
+            card.addEventListener('click', (e) => {
+                const href = card.getAttribute('href');
+                const match = href.match(/vimeo\.com\/(\d+)/);
+                if (match) {
+                    e.preventDefault();
+                    openPlayer(match[1]);
+                }
+            });
+        });
+
+        // Image Lightbox
+        function openLightbox(src) {
+            const lightbox = document.getElementById('lightbox');
+            const img = document.getElementById('lightboxImg');
+            img.src = src;
+            lightbox.classList.add('open');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeLightbox() {
+            const lightbox = document.getElementById('lightbox');
+            lightbox.classList.remove('open');
+            document.body.style.overflow = '';
+        }
+
+        document.querySelectorAll('div.video-card').forEach(card => {
+            card.addEventListener('click', () => {
+                const img = card.querySelector('img');
+                if (img) openLightbox(img.src);
+            });
+        });
+
+        document.getElementById('lightbox').addEventListener('click', (e) => {
+            if (e.target === e.currentTarget || e.target.classList.contains('lightbox-close')) closeLightbox();
+        });
+
+        document.getElementById('playerModal').addEventListener('click', (e) => {
+            if (e.target === e.currentTarget) closePlayer();
+        });
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                closeLightbox();
+                closePlayer();
+            }
+        });
+    </script>
+</body>
+</html>
