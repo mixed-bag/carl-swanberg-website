@@ -1,0 +1,6 @@
+{
+  "assets": {
+    "directory": "./",
+    "exclude": [".git/**"]
+  }
+}
